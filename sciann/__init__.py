@@ -14,6 +14,8 @@ from . import utils
 
 from .functionals.functional import Functional
 from .functionals.variable import Variable
+from .functionals.functional_UTK import Functional_UTK
+
 from .functionals.field import Field
 from .functionals.parameter import Parameter
 from .models.model import SciModel

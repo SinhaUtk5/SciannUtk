@@ -6,6 +6,7 @@ from __future__ import print_function
 
 from . import field
 from . import functional
+from . import functional_UTK
 from . import parameter
 from . import radialbasis
 from . import variable
@@ -14,6 +15,7 @@ from . import rnn_field
 from . import rnn_functional
 from . import rnn_variable
 
+from .functional_UTK import Functional_UTK
 from .functional import Functional
 from .field import Field
 from .parameter import Parameter

@@ -62,8 +62,9 @@ from .mlp_functional import MLPFunctional
     ValueError:
     TypeError:
 """
-def Functional(
+def Functional_UTK(
         fields=None,
+        Multi_Activation=False,
         variables=None,
         hidden_layers=None,
         activation="tanh",
@@ -74,8 +75,11 @@ def Functional(
         kernel_regularizer=None,
         bias_regularizer=None,
         trainable=True,
+        Multi_Activation_Layer=['tanh'],
         **kwargs):
     # prepare hidden layers.
+
+         
     if hidden_layers is None:
         hidden_layers = []
     else:
@@ -83,10 +87,31 @@ def Functional(
     if not all([isinstance(n, int) for n in hidden_layers]):
         raise TypeError("Enter a list of integers as the third input assigning layer widths, e.g. [10,10,10]. ")
     # prepare kernel initializers.
-    activations, def_biasinit, def_kerinit = \
-        prepare_default_activations_and_initializers(
-        len(hidden_layers) * [activation] + [output_activation]
-    )
+    if Multi_Activation is True:
+        
+        if(len(Multi_Activation_Layer)==len(hidden_layers)):
+              activations, def_biasinit, def_kerinit =prepare_default_activations_and_initializers(Multi_Activation_Layer
+                                                                                               + [output_activation] )
+              print('Multi Activation On By Utkarsh',Multi_Activation_Layer)
+              print('Output Activation is',output_activation)
+              print('hidden_layers sizes are',hidden_layers)
+              print('Activtaion Function and Hidden Layer Sizes Are',)
+              print("len(Multi_Activation_Layer)==len(hidden_layers)")
+        else: 
+          activations, def_biasinit, def_kerinit =prepare_default_activations_and_initializers(len(hidden_layers) * [Multi_Activation_Layer[0]]
+                                                                                               + [output_activation] )
+          print('Multi Activation On By Utkarsh, But Not Properly')
+          print('hidden_layers list length is not equal to Multi_Activation_Layer length ')
+          print('Output Activation is',output_activation)
+          print('hidden_layers sizes are',hidden_layers)
+          print("len(Multi_Activation_Layer)-len(hidden_layers)",len(Multi_Activation_Layer)-len(hidden_layers))
+     
+        
+    else:    
+        activations, def_biasinit, def_kerinit = \
+            prepare_default_activations_and_initializers(
+            len(hidden_layers) * [activation] + [output_activation]
+        )
     if kernel_initializer is None:
         kernel_initializer = def_kerinit
     elif isinstance(kernel_initializer, (float, int)):
@@ -239,4 +264,6 @@ def Functional(
         )
 
     return unpack_singleton(functionals)
+
+
 
